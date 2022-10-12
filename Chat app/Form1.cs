@@ -66,11 +66,33 @@ namespace Chat_app
 
             }
 
+            con.Close();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            timer1.Start();
+           // load_chats();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
             load_chats();
+        }
+
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button1_Click(null, null);
+                textBox1.Clear();
+            }
         }
     }
 }
