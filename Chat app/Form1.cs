@@ -49,7 +49,7 @@ namespace Chat_app
 
         void load_chats()
         {
-            listBox1.Items.Clear();
+           // listBox1.Items.Clear();
             var con = new NpgsqlConnection(cs);
             con.Open();
 
@@ -61,17 +61,31 @@ namespace Chat_app
             string txt = "";
             while (rdr.Read())
             {
-
-                listBox1.Items.Add(rdr.GetString(0) + " - " + rdr.GetString(1) + " :  " + rdr.GetString(2));
+                if (!listBox1.Items.Contains(rdr.GetString(0) + " - " + rdr.GetString(1) + " :  " + rdr.GetString(2)))
+                {
+                    listBox1.Items.Add(rdr.GetString(0) + " - " + rdr.GetString(1) + " :  " + rdr.GetString(2));
+                }
+                
 
             }
 
             con.Close();
+            listBox1.SelectedIndex = listBox1.Items.Count - 1;
 
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.UserPaint |
+                          ControlStyles.AllPaintingInWmPaint |
+                          ControlStyles.ResizeRedraw |
+                          ControlStyles.ContainerControl |
+                          ControlStyles.OptimizedDoubleBuffer |
+                          ControlStyles.SupportsTransparentBackColor
+                          , true);
+
             timer1.Start();
            // load_chats();
         }
